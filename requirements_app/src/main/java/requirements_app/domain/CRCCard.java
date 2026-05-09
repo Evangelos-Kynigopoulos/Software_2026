@@ -7,7 +7,7 @@ public class CRCCard {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String className;
 
@@ -27,8 +27,8 @@ public class CRCCard {
     public CRCCard() {
     }
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public String getClassName() { return className; }
     public void setClassName(String className) { this.className = className; }

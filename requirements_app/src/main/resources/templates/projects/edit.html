@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Project Workspace</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            min-height: 100vh;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        .page-card {
+            background: white;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 35px;
+            border-radius: 14px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            gap: 16px;
+        }
+
+        h1 {
+            margin: 0;
+            color: #1f2937;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            margin-top: 8px;
+            margin-bottom: 0;
+        }
+
+        .button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        .secondary-button {
+            background: #6b7280;
+        }
+
+        .secondary-button:hover {
+            background: #4b5563;
+        }
+
+        .green-button {
+            background: #16a34a;
+        }
+
+        .green-button:hover {
+            background: #15803d;
+        }
+
+        .orange-button {
+            background: #f97316;
+        }
+
+        .orange-button:hover {
+            background: #ea580c;
+        }
+
+        .project-info {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 28px;
+        }
+
+        .project-info h2 {
+            margin-top: 0;
+            color: #1f2937;
+            font-size: 20px;
+        }
+
+        .project-info p {
+            color: #4b5563;
+            margin-bottom: 0;
+            line-height: 1.5;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .section-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 24px;
+            background: #ffffff;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 230px;
+        }
+
+        .section-card h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #1f2937;
+            font-size: 22px;
+        }
+
+        .section-card p {
+            color: #6b7280;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        .section-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        @media (max-width: 900px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .top-bar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page-card">
+
+    <div class="top-bar">
+        <div>
+            <h1 th:text="${project.name}">Project Name</h1>
+            <p class="subtitle">Project workspace</p>
+        </div>
+
+        <a class="button secondary-button" th:href="@{/projects}">Back to Projects</a>
+    </div>
+
+    <div class="project-info">
+        <h2>Project Description</h2>
+        <p th:text="${project.description}">Project description appears here.</p>
+    </div>
+
+    <div class="dashboard-grid">
+
+        <div class="section-card">
+            <div>
+                <h2>Use Cases</h2>
+                <p>
+                    Define and manage the functional requirements of this project,
+                    including preconditions, flows, and postconditions.
+                </p>
+            </div>
+
+            <div class="section-actions">
+                <a class="button"
+                   th:href="@{/projects/{projectId}/use-cases(projectId=${project.id})}">
+                    View Use Cases
+                </a>
+
+                <a class="button green-button"
+                   th:href="@{/projects/{projectId}/use-cases/new(projectId=${project.id})}">
+                    Add Use Case
+                </a>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div>
+                <h2>CRC Cards</h2>
+                <p>
+                    Manage candidate classes, their responsibilities, and their
+                    collaborations with other classes.
+                </p>
+            </div>
+
+            <div class="section-actions">
+                <a class="button" href="#">
+                    View CRC Cards
+                </a>
+
+                <a class="button green-button" href="#">
+                    Add CRC Card
+                </a>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div>
+                <h2>Diagram Generation</h2>
+                <p>
+                    Generate text scripts for UML-style use case diagrams and
+                    CRC/class diagrams using PlantUML or Nomnoml.
+                </p>
+            </div>
+
+            <div class="section-actions">
+                <a class="button orange-button" href="#">
+                    Generate Use Case Diagram
+                </a>
+
+                <a class="button orange-button" href="#">
+                    Generate CRC Diagram
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

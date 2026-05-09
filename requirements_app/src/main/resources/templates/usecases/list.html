@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Use Cases</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            min-height: 100vh;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        .page-card {
+            background: white;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 35px;
+            border-radius: 14px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+            gap: 16px;
+        }
+
+        h1 {
+            margin: 0;
+            color: #1f2937;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            margin-top: 8px;
+            margin-bottom: 0;
+        }
+
+        .button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        .green-button {
+            background: #16a34a;
+        }
+
+        .green-button:hover {
+            background: #15803d;
+        }
+
+        .delete-button {
+            background: #dc2626;
+        }
+
+        .delete-button:hover {
+            background: #b91c1c;
+        }
+
+        .secondary-button {
+            background: #6b7280;
+        }
+
+        .secondary-button:hover {
+            background: #4b5563;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 24px;
+        }
+
+        th {
+            background: #f9fafb;
+            color: #374151;
+            text-align: left;
+            padding: 13px;
+            border-bottom: 1px solid #d1d5db;
+        }
+
+        td {
+            padding: 13px;
+            border-bottom: 1px solid #e5e7eb;
+            color: #374151;
+            vertical-align: top;
+        }
+
+        tr:hover {
+            background: #f9fafb;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .empty-message {
+            margin-top: 28px;
+            padding: 18px;
+            background: #f9fafb;
+            border-radius: 10px;
+            color: #6b7280;
+            text-align: center;
+        }
+
+        .muted {
+            color: #9ca3af;
+            font-style: italic;
+        }
+
+        .preserve-lines {
+            white-space: pre-line;
+        }
+
+        form {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page-card">
+
+    <div class="top-bar">
+        <div>
+            <h1>Use Cases</h1>
+            <p class="subtitle">Manage use cases for this project</p>
+        </div>
+
+        <div class="actions">
+            <a class="button green-button"
+               th:href="@{/projects/{projectId}/use-cases/new(projectId=${projectId})}">
+                Add Use Case
+            </a>
+
+            <a class="button secondary-button"
+               th:href="@{/projects/{projectId}/edit(projectId=${projectId})}">
+                Back to Project Workspace
+            </a>
+        </div>
+    </div>
+
+    <div th:if="${#lists.isEmpty(useCases)}" class="empty-message">
+        No use cases yet. Add the first use case for this project.
+    </div>
+
+    <table th:if="${!#lists.isEmpty(useCases)}">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Actors</th>
+            <th>Preconditions</th>
+            <th>Main Flow</th>
+            <th>Postconditions</th>
+            <th style="width: 190px;">Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="useCase : ${useCases}">
+            <td th:text="${useCase.title}">Title</td>
+
+            <td>
+                <span class="muted" th:if="${#lists.isEmpty(useCase.actors)}">No actors</span>
+
+                <span th:each="actor, iterStat : ${useCase.actors}">
+                    <span th:text="${actor.name}">Actor</span><span th:if="${!iterStat.last}">, </span>
+                </span>
+            </td>
+
+            <td class="preserve-lines" th:text="${useCase.preconditions}">Preconditions</td>
+            <td class="preserve-lines" th:text="${useCase.mainFlow}">Main flow</td>
+            <td class="preserve-lines" th:text="${useCase.postconditions}">Postconditions</td>
+
+            <td>
+                <div class="actions">
+                    <a class="button green-button"
+                       th:href="@{/projects/{projectId}/use-cases/{useCaseId}/edit(projectId=${projectId}, useCaseId=${useCase.id})}">
+                        Edit
+                    </a>
+
+                    <form th:action="@{/projects/{projectId}/use-cases/{useCaseId}/delete(projectId=${projectId}, useCaseId=${useCase.id})}"
+                          method="post">
+                        <button class="button delete-button" type="submit">
+                            Delete
+                        </button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>

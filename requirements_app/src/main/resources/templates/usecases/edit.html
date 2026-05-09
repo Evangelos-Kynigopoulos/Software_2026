@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Use Case</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            min-height: 100vh;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        .form-card {
+            background: white;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 35px;
+            border-radius: 14px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            color: #1f2937;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #6b7280;
+            margin-bottom: 28px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: #374151;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px;
+            margin-bottom: 18px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+        }
+
+        textarea {
+            min-height: 95px;
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+        }
+
+        .hint {
+            color: #6b7280;
+            font-size: 13px;
+            margin-top: -10px;
+            margin-bottom: 18px;
+        }
+
+        button {
+            width: 100%;
+            box-sizing: border-box;
+            background: #16a34a;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #15803d;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="form-card">
+    <h1>Edit Use Case</h1>
+    <p class="subtitle">Update this use case definition</p>
+
+    <form th:action="@{/projects/{projectId}/use-cases/{useCaseId}/edit(projectId=${projectId}, useCaseId=${useCase.id})}"
+          th:object="${useCase}"
+          method="post">
+
+        <div>
+            <label>Title</label>
+            <input type="text"
+                   th:field="*{title}"
+                   required>
+        </div>
+
+        <div>
+            <label>Actors</label>
+            <input type="text"
+                   name="actorsText"
+                   th:value="${actorsText}"
+                   placeholder="Example: Student, Admin, External System">
+            <p class="hint">Separate multiple actors with commas. Existing actors will be reused; new ones will be created.</p>
+        </div>
+
+        <div>
+            <label>Preconditions</label>
+            <textarea th:field="*{preconditions}"></textarea>
+        </div>
+
+        <div>
+            <label>Main Flow</label>
+            <textarea th:field="*{mainFlow}"></textarea>
+        </div>
+
+        <div>
+            <label>Postconditions</label>
+            <textarea th:field="*{postconditions}"></textarea>
+        </div>
+
+        <button type="submit">Save Changes</button>
+    </form>
+
+    <p class="back-link">
+        <a th:href="@{/projects/{projectId}/use-cases(projectId=${projectId})}">
+            Back to Use Cases
+        </a>
+    </p>
+</div>
+
+</body>
+</html>
