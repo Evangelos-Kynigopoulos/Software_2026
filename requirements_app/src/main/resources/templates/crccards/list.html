@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Use Cases</title>
+    <title>CRC Cards</title>
 
     <style>
         body {
@@ -128,21 +128,10 @@
             white-space: pre-line;
         }
 
-        .actor-pill {
+        .use-case-pill {
             display: inline-block;
-            background: #fef3c7;
-            color: #92400e;
-            padding: 5px 9px;
-            border-radius: 999px;
-            font-size: 13px;
-            font-weight: bold;
-            margin: 3px;
-        }
-
-        .crc-card-pill {
-            display: inline-block;
-            background: #ecfdf5;
-            color: #15803d;
+            background: #eef2ff;
+            color: #1d4ed8;
             padding: 5px 9px;
             border-radius: 999px;
             font-size: 13px;
@@ -167,14 +156,14 @@
 
     <div class="top-bar">
         <div>
-            <h1>Use Cases</h1>
-            <p class="subtitle">Manage use cases for this project</p>
+            <h1>CRC Cards</h1>
+            <p class="subtitle">Manage CRC cards for this project</p>
         </div>
 
         <div class="actions">
             <a class="button green-button"
-               th:href="@{/projects/{projectId}/use-cases/new(projectId=${projectId})}">
-                Add Use Case
+               th:href="@{/projects/{projectId}/crc-cards/new(projectId=${projectId})}">
+                Add CRC Card
             </a>
 
             <a class="button secondary-button"
@@ -184,76 +173,56 @@
         </div>
     </div>
 
-    <div th:if="${#lists.isEmpty(useCases)}" class="empty-message">
-        No use cases yet. Add the first use case for this project.
+    <div th:if="${#lists.isEmpty(crcCards)}" class="empty-message">
+        No CRC cards yet. Add the first CRC card for this project.
     </div>
 
-    <table th:if="${!#lists.isEmpty(useCases)}">
+    <table th:if="${!#lists.isEmpty(crcCards)}">
         <thead>
         <tr>
-            <th>Title</th>
-            <th>Actors</th>
-            <th>Preconditions</th>
-            <th>Main Flow</th>
-            <th>Postconditions</th>
-            <th>Linked CRC Cards</th>
+            <th>Class Name</th>
+            <th>Responsibilities</th>
+            <th>Collaborations</th>
+            <th>Linked Use Cases</th>
             <th style="width: 190px;">Actions</th>
         </tr>
         </thead>
 
         <tbody>
-        <tr th:each="useCase : ${useCases}">
-            <td th:text="${useCase.title}">Use case title</td>
+        <tr th:each="crcCard : ${crcCards}">
+            <td th:text="${crcCard.className}">Class name</td>
 
-            <td>
-                <span class="no-linked-items"
-                      th:if="${useCase.actors == null || #lists.isEmpty(useCase.actors)}">
-                    No actors
-                </span>
-
-                <span class="actor-pill"
-                      th:each="actor : ${useCase.actors}"
-                      th:text="${actor.name}">
-                    Actor
-                </span>
+            <td class="preserve-lines"
+                th:text="${crcCard.responsibilities}">
+                Responsibilities
             </td>
 
             <td class="preserve-lines"
-                th:text="${useCase.preconditions}">
-                Preconditions
-            </td>
-
-            <td class="preserve-lines"
-                th:text="${useCase.mainFlow}">
-                Main Flow
-            </td>
-
-            <td class="preserve-lines"
-                th:text="${useCase.postconditions}">
-                Postconditions
+                th:text="${crcCard.collaborations}">
+                Collaborations
             </td>
 
             <td>
                 <span class="no-linked-items"
-                      th:if="${useCase.crcCards == null || #lists.isEmpty(useCase.crcCards)}">
-                    No linked CRC cards
+                      th:if="${crcCard.useCases == null || #lists.isEmpty(crcCard.useCases)}">
+                    No linked use cases
                 </span>
 
-                <span class="crc-card-pill"
-                      th:each="crcCard : ${useCase.crcCards}"
-                      th:text="${crcCard.className}">
-                    CRC Card
+                <span class="use-case-pill"
+                      th:each="useCase : ${crcCard.useCases}"
+                      th:text="${useCase.title}">
+                    Use Case
                 </span>
             </td>
 
             <td>
                 <div class="actions">
                     <a class="button green-button"
-                       th:href="@{/projects/{projectId}/use-cases/{useCaseId}/edit(projectId=${projectId}, useCaseId=${useCase.id})}">
+                       th:href="@{/projects/{projectId}/crc-cards/{crcCardId}/edit(projectId=${projectId}, crcCardId=${crcCard.id})}">
                         Edit
                     </a>
 
-                    <form th:action="@{/projects/{projectId}/use-cases/{useCaseId}/delete(projectId=${projectId}, useCaseId=${useCase.id})}"
+                    <form th:action="@{/projects/{projectId}/crc-cards/{crcCardId}/delete(projectId=${projectId}, crcCardId=${crcCard.id})}"
                           method="post">
                         <button class="button delete-button" type="submit">
                             Delete

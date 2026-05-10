@@ -207,11 +207,13 @@
             </div>
 
             <div class="section-actions">
-                <a class="button" href="#">
+                <a class="button"
+                   th:href="@{/projects/{projectId}/crc-cards(projectId=${project.id})}">
                     View CRC Cards
                 </a>
 
-                <a class="button green-button" href="#">
+                <a class="button green-button"
+                   th:href="@{/projects/{projectId}/crc-cards/new(projectId=${project.id})}">
                     Add CRC Card
                 </a>
             </div>
@@ -227,11 +229,13 @@
             </div>
 
             <div class="section-actions">
-                <a class="button orange-button" href="#">
+                <a class="button orange-button"
+                   th:href="@{/projects/{projectId}/diagrams/use-case(projectId=${project.id}, tool='plantuml')}">
                     Generate Use Case Diagram
                 </a>
 
-                <a class="button orange-button" href="#">
+                <a class="button orange-button"
+                   th:href="@{/projects/{projectId}/diagrams/crc(projectId=${project.id}, tool='plantuml')}">
                     Generate CRC Diagram
                 </a>
             </div>

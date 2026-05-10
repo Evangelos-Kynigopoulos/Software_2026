@@ -1,5 +1,7 @@
 package requirements_app.domain;
+
 import jakarta.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,7 +24,7 @@ public class CRCCard {
     private Project project;
 
     @ManyToMany(mappedBy = "crcCards")
-    private List<UseCase> useCases;
+    private List<UseCase> useCases = new ArrayList<>();
 
     public CRCCard() {
     }

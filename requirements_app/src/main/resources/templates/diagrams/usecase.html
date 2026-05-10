@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Use Case Diagram Script</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            min-height: 100vh;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        .page-card {
+            background: white;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 35px;
+            border-radius: 14px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+            gap: 16px;
+        }
+
+        h1 {
+            margin: 0;
+            color: #1f2937;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            margin-top: 8px;
+            margin-bottom: 0;
+        }
+
+        .button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        .secondary-button {
+            background: #6b7280;
+        }
+
+        .secondary-button:hover {
+            background: #4b5563;
+        }
+
+        .tool-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 22px;
+            flex-wrap: wrap;
+        }
+
+        .tool-button {
+            background: #e5e7eb;
+            color: #1f2937;
+        }
+
+        .tool-button:hover {
+            background: #d1d5db;
+        }
+
+        .active-tool {
+            background: #f97316;
+            color: white;
+        }
+
+        .active-tool:hover {
+            background: #ea580c;
+        }
+
+        .info-box {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 16px;
+            color: #4b5563;
+            margin-bottom: 22px;
+            line-height: 1.5;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 420px;
+            padding: 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 14px;
+            resize: vertical;
+            background: #111827;
+            color: #f9fafb;
+            line-height: 1.5;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        @media (max-width: 900px) {
+            .top-bar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page-card">
+
+    <div class="top-bar">
+        <div>
+            <h1>Use Case Diagram Script</h1>
+            <p class="subtitle">Generated text-based UML script for this project</p>
+        </div>
+
+        <a class="button secondary-button"
+           th:href="@{/projects/{projectId}/edit(projectId=${projectId})}">
+            Back to Project Workspace
+        </a>
+    </div>
+
+    <div class="tool-selector">
+        <a class="button tool-button"
+           th:classappend="${selectedTool == 'plantuml'} ? ' active-tool'"
+           th:href="@{/projects/{projectId}/diagrams/use-case(projectId=${projectId}, tool='plantuml')}">
+            PlantUML
+        </a>
+
+        <a class="button tool-button"
+           th:classappend="${selectedTool == 'nomnoml'} ? ' active-tool'"
+           th:href="@{/projects/{projectId}/diagrams/use-case(projectId=${projectId}, tool='nomnoml')}">
+            Nomnoml
+        </a>
+    </div>
+
+    <div class="info-box">
+        This is the generated script for the use case diagram of this project.
+        Choose PlantUML or Nomnoml to generate the diagram script in the selected text-based UML format.
+    </div>
+
+    <textarea readonly th:text="${diagramScript}">
+@startuml
+@enduml
+    </textarea>
+
+</div>
+
+</body>
+</html>
